@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+    <!--开启注解扫描-->
+    <context:component-scan base-package="net.litchi,cn.zmproject"></context:component-scan>
+
+
     <!--
     用来模拟web.xml
      <servlet>
@@ -25,9 +30,9 @@
 
          DI dependency inject 依赖注入
     -->
-    <bean id="mockServlet1" class="net.litchi.spring.mock.MockServlet1"
+   <!-- <bean id="mockServlet1" class="net.litchi.spring.mock.MockServlet1"
           init-method="init" destroy-method="destroy">
-        <!--基于构造方法注入-->
+        &lt;!&ndash;基于构造方法注入&ndash;&gt;
         <constructor-arg name="age" value="10"/>
         <constructor-arg name="name" value="test"/>
         <constructor-arg name="ids">
@@ -40,11 +45,11 @@
         <constructor-arg name="mockHttpServlet" ref="mockServlet2"/>
         <constructor-arg name="httpServletMap">
             <map>
-                <!--关联外置bean-->
+                &lt;!&ndash;关联外置bean&ndash;&gt;
                 <entry key="m1" value-ref="mockServlet2"/>
                 <entry key="m2" value-ref="mockServlet2"/>
                 <entry key="m3" value-ref="mockServlet2"/>
-                <!--内置bean-->
+                &lt;!&ndash;内置bean&ndash;&gt;
                 <entry key="dev88173">
                     <bean class="net.litchi.spring.mock.MockServlet2">
 
@@ -57,30 +62,30 @@
 
 
 
-        <!--基于setter方法注入-->
+        &lt;!&ndash;基于setter方法注入&ndash;&gt;
         <property name="age" value="10"/>
         <property name="name" value="zm"/>
-        <!--setter对象注入-->
+        &lt;!&ndash;setter对象注入&ndash;&gt;
         <property name="mockHttpServlet" ref="mockServlet2">
-            <!--<bean class="net.litchi.spring.mock.MockServlet2"/>-->
+            &lt;!&ndash;<bean class="net.litchi.spring.mock.MockServlet2"/>&ndash;&gt;
         </property>
-        <!--注入List集合-->
+        &lt;!&ndash;注入List集合&ndash;&gt;
         <property name="ids">
             <list>
-                <!--<ref></ref>-->
+                &lt;!&ndash;<ref></ref>&ndash;&gt;
                 <value>1</value>
                 <value>2</value>
                 <value>3</value>
             </list>
         </property>
-        <!--注入Map集合-->
+        &lt;!&ndash;注入Map集合&ndash;&gt;
         <property name="httpServletMap">
             <map>
-                <!--关联外置bean-->
+                &lt;!&ndash;关联外置bean&ndash;&gt;
                 <entry key="m1" value-ref="mockServlet2"/>
                 <entry key="m2" value-ref="mockServlet2"/>
                 <entry key="m3" value-ref="mockServlet2"/>
-                <!--内置bean-->
+                &lt;!&ndash;内置bean&ndash;&gt;
                 <entry key="dev88173">
                     <bean class="net.litchi.spring.mock.MockServlet2">
 
@@ -90,11 +95,11 @@
         </property>
     </bean>
 
-    <!--   <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+    &lt;!&ndash;   <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
            <property name="dataSource" value=""></property>
        </bean>
 
-       <bean ></bean>-->
+       <bean ></bean>&ndash;&gt;
 
     <bean id="mockServlet2" class="net.litchi.spring.mock.MockServlet2">
 
@@ -116,5 +121,7 @@
     <bean id="userServlet" class="net.litchi.spring.ioc.web.servlet.UserServlet">
         <property name="userService" ref="userServiceImpl2"/>
     </bean>
+
+    -->
 
 </beans>
