@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!--
+    用来模拟web.xml
+     <servlet>
+         <servlet-name>indexServlet</servlet-name>
+         <servlet-class>net.litchi.xxx.indexServlet</servlet-class>
+      </servlet>
+      <servlet-mapping>
+         <servlet-name>indexServlet</servlet-name>
+         <url>/index/*</url>
+      </servlet-mapping>
+    -->
+    <!--
+        IOC inverse of control 对象的创建，不再有new ，所有的组件交给Spring控制
+        注册 mockServlet1 到容器中，并且起名为mockServlet1
+        net.litchi.spring.mock.MockServlet1 全限定名
+        newClass= Class.newInstance();
+        类 实例/引用 对象
+        User user =new User();
+        scope :  prototype 原型 singleton 单例（默认）
+
+
+         DI dependency inject 依赖注入
+    -->
+    <bean id="mockServlet1" class="net.litchi.spring.mock.MockServlet1"
+          init-method="init" destroy-method="destroy">
+        <!--基于构造方法注入-->
+        <constructor-arg name="age" value="10"/>
+        <constructor-arg name="name" value="test"/>
+        <constructor-arg name="ids">
+            <list>
+                <value>1</value>
+                <value>2</value>
+                <value>3</value>
+            </list>
+        </constructor-arg>
+        <constructor-arg name="mockHttpServlet" ref="mockServlet2"/>
+        <constructor-arg name="httpServletMap">
+            <map>
+                <!--关联外置bean-->
+                <entry key="m1" value-ref="mockServlet2"/>
+                <entry key="m2" value-ref="mockServlet2"/>
+                <entry key="m3" value-ref="mockServlet2"/>
+                <!--内置bean-->
+                <entry key="dev88173">
+                    <bean class="net.litchi.spring.mock.MockServlet2">
+
+                    </bean>
+                </entry>
+            </map>
+        </constructor-arg>
+
+
+
+
+
+        <!--基于setter方法注入-->
+        <property name="age" value="10"/>
+        <property name="name" value="zm"/>
+        <!--setter对象注入-->
+        <property name="mockHttpServlet" ref="mockServlet2">
+            <!--<bean class="net.litchi.spring.mock.MockServlet2"/>-->
+        </property>
+        <!--注入List集合-->
+        <property name="ids">
+            <list>
+                <!--<ref></ref>-->
+                <value>1</value>
+                <value>2</value>
+                <value>3</value>
+            </list>
+        </property>
+        <!--注入Map集合-->
+        <property name="httpServletMap">
+            <map>
+                <!--关联外置bean-->
+                <entry key="m1" value-ref="mockServlet2"/>
+                <entry key="m2" value-ref="mockServlet2"/>
+                <entry key="m3" value-ref="mockServlet2"/>
+                <!--内置bean-->
+                <entry key="dev88173">
+                    <bean class="net.litchi.spring.mock.MockServlet2">
+
+                    </bean>
+                </entry>
+            </map>
+        </property>
+    </bean>
+
+    <!--   <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+           <property name="dataSource" value=""></property>
+       </bean>
+
+       <bean ></bean>-->
+
+    <bean id="mockServlet2" class="net.litchi.spring.mock.MockServlet2">
+
+    </bean>
+
+
+    <bean id="userDao" class="net.litchi.spring.ioc.dao.UserDao">
+
+    </bean>
+
+    <bean id="userServiceImpl" class="net.litchi.spring.ioc.service.impl.UserServiceImpl">
+        <property name="userDao" ref="userDao"/>
+    </bean>
+
+    <bean id="userServiceImpl2" class="net.litchi.spring.ioc.service.impl.UserServiceImpl2">
+        <property name="userDao" ref="userDao"/>
+    </bean>
+
+    <bean id="userServlet" class="net.litchi.spring.ioc.web.servlet.UserServlet">
+        <property name="userService" ref="userServiceImpl2"/>
+    </bean>
+
+</beans>
