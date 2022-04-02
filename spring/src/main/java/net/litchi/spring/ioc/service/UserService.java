@@ -7,4 +7,10 @@ package net.litchi.spring.ioc.service;
  */
 public interface UserService {
     void doService();
+
+    int add(int a, int b);
+
+    int test();
+
+    int decrease(int a, int b);
 }

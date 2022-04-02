@@ -22,4 +22,21 @@ public class UserServiceImpl2 implements UserService {
         System.out.println("UserServiceImpl2");
         userDao.sayHello();
     }
+
+    @Override
+    public int add(int a, int b) {
+        System.out.println("UserServiceImpl2 add invoke");
+
+        return 0;
+    }
+
+    @Override
+    public int test() {
+        return 2;
+    }
+
+    @Override
+    public int decrease(int a, int b) {
+        return 0;
+    }
 }
