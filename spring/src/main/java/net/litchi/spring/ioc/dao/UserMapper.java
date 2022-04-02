@@ -23,11 +23,19 @@ public interface UserMapper {
 
     List<User> selectUserByUserQueryVo(UserQueryVo vo);
 
-    int insertUser(User user);
-
     int insertUserUuid(User user);
 
     int updateUserByUserId(User user);
 
     int deleteUserByUserId(User user);
+
+
+    int insertUser(User user);
+
+    int updateUser(User user);
+
+    int deleteUser(User user);
+
+
+    List<User> selectUserByQueryVo(UserQueryVo vo);
 }

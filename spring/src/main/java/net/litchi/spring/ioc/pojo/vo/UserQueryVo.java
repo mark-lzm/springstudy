@@ -4,6 +4,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import net.litchi.spring.ioc.pojo.User;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -14,8 +15,6 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-//@Builder
-//@SuperBuilder
 public class  UserQueryVo extends User {
     private List<Integer> ids;
 }

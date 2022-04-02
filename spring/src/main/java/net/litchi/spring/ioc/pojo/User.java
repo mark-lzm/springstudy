@@ -1,6 +1,7 @@
 package net.litchi.spring.ioc.pojo;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -17,7 +18,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-//@SuperBuilder
+@Builder
 public class User implements Serializable {
     private String id;
     private String username;

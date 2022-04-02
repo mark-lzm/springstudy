@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.*;
 
+import java.io.DataInput;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -45,6 +46,39 @@ public class MybatisMain {
         userMapper.selectAllUser().forEach(user -> {
             System.out.println(user);
         });
+    }
+
+    @Test
+    public void updateUserTest() {
+        User build = User.builder()
+                .id("1")
+                .username("mt" + new Date()).build();
+        userMapper.updateUser(build);
+    }
+
+    @Test
+    public void deleteUserTest() {
+        User build = User.builder()
+                .id("102")
+                .password("123456")
+                .build();
+        userMapper.deleteUser(build);
+    }
+
+    @Test
+    public void selectAllUserByUserQueryVo() {
+        List<Integer> ids = new ArrayList<>();
+        ids.add(1);
+        ids.add(4);
+        ids.add(5);
+        ids.add(7);
+        ids.add(103);
+
+        UserQueryVo build = new UserQueryVo();
+        build.setPassword("123456");
+        build.setIds(ids);
+
+        userMapper.selectUserByQueryVo(build).forEach(System.out::println);
     }
 
     @After
