@@ -13,9 +13,18 @@
         切点 pointCut   连接点 jointPoint
         通知 advice
      -->
-    <bean id="myAspect" class="net.litchi.spring.aop.aspect.MyAspect"/>
 
-    <aop:config>
+    <!--基于注解配置aop  开启自动代理-->
+    <aop:aspectj-autoproxy/>
+
+    <!--开启CGLIB实现代理  false为基于JDK代理   （是否存在父类，存在则JDK，不存在则CGLIB）-->
+<!--    <aop:aspectj-autoproxy proxy-target-class="true"/>-->
+
+
+<!--    <bean id="myAspect" class="net.litchi.spring.aop.aspect.MyAspect"/>-->
+
+    <!--基于xml文件配置aop-->
+  <!--  <aop:config>
         <aop:aspect ref="myAspect">
             <aop:pointcut id="pc"
                           expression="execution(* net.litchi..*.service.impl.*.*(..))"/>
@@ -25,7 +34,7 @@
             <aop:after-throwing method="afterThrowing" throwing="e" pointcut-ref="pc"/>
             <aop:after method="after" pointcut-ref="pc"/>
         </aop:aspect>
-    </aop:config>
+    </aop:config>-->
 
 
 

@@ -3,6 +3,8 @@ package net.litchi.spring.aop.aspect;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.*;
+import org.springframework.stereotype.Component;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -12,12 +14,21 @@ import java.lang.reflect.Method;
  * @Author Mark
  * @Date 2022/4/2 11:28
  */
+@Component
+@Aspect
 public class MyAspect {
-    boolean before(JoinPoint joinpoint){
+
+    @Pointcut("execution(* net.litchi..*.service.impl.*.*(..))")
+    public void pc() {
+    }
+
+    @Before(value = "pc()")
+    boolean before(JoinPoint joinpoint) {
         System.out.println("before advice");
         return true;
     }
 
+    @Around(value = "pc()")
     Object around(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         System.out.println("around advice");
 
@@ -25,17 +36,19 @@ public class MyAspect {
         return result;
     }
 
-    void afterReturning(JoinPoint joinpoint, Object result){
+    @AfterReturning(pointcut = "pc()", returning = "result")
+    void afterReturning(JoinPoint joinpoint, Object result) {
         System.out.println("afterReturning advice");
-
     }
 
-    void afterThrowing(JoinPoint joinpoint, Exception e){
+    @AfterThrowing(pointcut = "pc()", throwing = "e")
+    void afterThrowing(JoinPoint joinpoint, Exception e) {
         System.out.println("afterThrowing advice");
 
     }
 
-    void after(JoinPoint joinpoint){
+    @After(value = "pc()")
+    void after(JoinPoint joinpoint) {
         System.out.println("after advice");
 
     }
