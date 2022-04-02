@@ -1,11 +1,13 @@
 package net.litchi.mybatis;
 
+import net.litchi.spring.ioc.dao.UserMapper;
 import net.litchi.spring.ioc.pojo.User;
 import net.litchi.spring.ioc.pojo.vo.UserQueryVo;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.junit.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,14 +21,60 @@ import java.util.List;
  * @Date 2022/4/2 15:37
  */
 public class MybatisMain {
+    private static SqlSessionFactory sqlSessionFactory;
+    SqlSession sqlSession;
+
+    private UserMapper userMapper;
+
+    @BeforeClass
+    public static void init() throws IOException {
+        sqlSessionFactory =
+                new SqlSessionFactoryBuilder()
+                        .build(Resources.getResourceAsStream("mybatis-config.xml"));
+
+    }
+
+    @Before
+    public void beforeTest() {
+        sqlSession = sqlSessionFactory.openSession();
+        userMapper = sqlSession.getMapper(UserMapper.class);
+    }
+
+    @Test
+    public void selectAllUserTest() {
+        userMapper.selectAllUser().forEach(user -> {
+            System.out.println(user);
+        });
+    }
+
+    @After
+    public void afterTest() {
+        sqlSession.commit();
+        sqlSession.close();
+    }
+
+
+    @AfterClass
+    public static void destroy() {
+
+    }
+
+
     public static void main(String[] args) throws IOException {
 
-        SqlSessionFactory sqlSessionFactory =
+ /*       SqlSessionFactory sqlSessionFactory =
                 new SqlSessionFactoryBuilder()
                         .build(Resources.getResourceAsStream("mybatis-config.xml"));
 
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+//        System.out.println(mapper);
+
+        mapper.selectAllUser().forEach(key -> {
+            System.out.println(key);
+        });
+*/
        /* List<User> selectAllUser = sqlSession.selectList("test.selectAllUser");
         for (User user : selectAllUser) {
             System.out.println(user);
@@ -45,12 +93,12 @@ public class MybatisMain {
         params.put("password", "123456");
         */
 
-        UserQueryVo vo = new UserQueryVo();
+        /*UserQueryVo vo = new UserQueryVo();
         List<Integer> integerList = new ArrayList<>();
         integerList.add(1);
-        UserQueryVo mt = UserQueryVo.builder().ids(integerList).build();
+        UserQueryVo mt = UserQueryVo.builder().ids(integerList).build();*/
 
-        System.out.println(mt);
+//        System.out.println(mt);
       /*  vo.setUsername("mt");
         vo.setPassword("123456");
 
@@ -58,7 +106,7 @@ public class MybatisMain {
         for (User user1 : users) {
             System.out.println(user1);
         }*/
-        sqlSession.commit();
-        sqlSession.close();
+       /* sqlSession.commit();
+        sqlSession.close();*/
     }
 }

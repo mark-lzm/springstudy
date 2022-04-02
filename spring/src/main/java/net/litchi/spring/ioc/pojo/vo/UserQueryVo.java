@@ -14,8 +14,8 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-@SuperBuilder
-public class UserQueryVo extends User {
+//@Builder
+//@SuperBuilder
+public class  UserQueryVo extends User {
     private List<Integer> ids;
 }
