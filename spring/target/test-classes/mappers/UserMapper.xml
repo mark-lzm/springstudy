@@ -4,4 +4,15 @@
         select *
         from user
     </select>
+
+    <select id="selectUserLikeName" parameterType="string" resultType="net.litchi.spring.ioc.pojo.User" >
+        select * from user u where u.username like '%${value}%'
+    </select>
+
+    <!--    增删改，固定返回值都是int类型，表示sql语句影响了多少条记录-->
+    <insert id="insertUser" parameterType="net.litchi.spring.ioc.pojo.User">
+        insert into user(id, username, birthday, sex, address, password, mobile)
+        values (#{id}, #{username}, #{birthday}, #{sex}, #{address}, #{password}, #{mobile})
+    </insert>
+
 </mapper>

@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -23,10 +24,19 @@ public class MybatisMain {
 
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
-        List<User> selectAllUser = sqlSession.selectList("selectAllUser");
+       /* List<User> selectAllUser = sqlSession.selectList("test.selectAllUser");
         for (User user : selectAllUser) {
-            System.out.println(user.getId());
+            System.out.println(user);
+        }*/
+        List<User> selectAllUser = sqlSession.selectList("test.selectUserLikeName","mt");
+        for (User user : selectAllUser) {
+            System.out.println(user);
         }
 
+/*        User user = new User("2311", "zm", new Date(), 'm', "zk", "123456", "13500000000");
+        System.out.println(sqlSession.insert("insertUser", user));*/
+
+        sqlSession.commit();
+        sqlSession.close();
     }
 }

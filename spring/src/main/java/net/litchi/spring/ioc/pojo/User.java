@@ -1,6 +1,11 @@
 package net.litchi.spring.ioc.pojo;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @Description
@@ -8,38 +13,21 @@ import java.io.Serializable;
  * @Date 2022/4/2 9:33
  */
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class User implements Serializable {
     private String id;
+    private String username;
+    private Date birthday;
+    private Character sex;
+    private String address;
     private String password;
+    private String mobile;
+
 
     public int add(int a, int b) {
         return a + b;
     }
-
-    public User() {
-
-    }
-
-    public User(String id, String password) {
-        this.id = id;
-        this.password = password;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
 
 }
