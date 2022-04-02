@@ -66,7 +66,7 @@ public class MybatisMain {
     }
 
     @Test
-    public void selectAllUserByUserQueryVo() {
+    public void selectAllUserByUserQueryVoTest() {
         List<Integer> ids = new ArrayList<>();
         ids.add(1);
         ids.add(4);
@@ -74,11 +74,21 @@ public class MybatisMain {
         ids.add(7);
         ids.add(103);
 
-        UserQueryVo build = new UserQueryVo();
-        build.setPassword("123456");
-        build.setIds(ids);
+        UserQueryVo build = UserQueryVo.builder().ids(ids)
+                .password("123456").build();
 
         userMapper.selectUserByQueryVo(build).forEach(System.out::println);
+    }
+
+    @Test
+    public void selectAllUserAndOrdersTest(){
+        userMapper.selectAllUserAndOrders().forEach(user -> {
+            user.getOrders().forEach(orders -> {
+                orders.getOrderDetails().forEach(orderDetail -> {
+                    System.out.println(orderDetail.getItems());
+                });
+            });
+        });
     }
 
     @After

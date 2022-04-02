@@ -8,6 +8,7 @@ import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Description
@@ -18,7 +19,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@SuperBuilder
 public class User implements Serializable {
     private String id;
     private String username;
@@ -28,9 +29,6 @@ public class User implements Serializable {
     private String password;
     private String mobile;
 
-
-   /* public int add(int a, int b) {
-        return a + b;
-    }*/
+    private List<Orders> orders;
 
 }

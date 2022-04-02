@@ -147,4 +147,89 @@
     </select>
 
 
+    <resultMap id="basicUserResultMap" type="net.litchi.spring.ioc.pojo.User">
+        <id property="id" column="id"/>
+        <result property="address" column="address"/>
+        <result property="birthday" column="birthday"/>
+        <result property="mobile" column="mobile"/>
+        <result property="password" column="password"/>
+        <result property="sex" column="sex"/>
+        <result property="username" column="username"/>
+
+    </resultMap>
+
+    <resultMap id="UserAndOrdersResultMap" type="net.litchi.spring.ioc.pojo.User"
+               extends="basicUserResultMap">
+        <collection property="orders" ofType="net.litchi.spring.ioc.pojo.Orders">
+            <id property="id" column="o_id"/>
+            <result property="number" column="number"/>
+            <result property="note" column="note"/>
+            <result property="createtime" column="createtime"/>
+        </collection>
+    </resultMap>
+
+    <resultMap id="UserAndOrdersAndOrderDetailsResultMap" type="net.litchi.spring.ioc.pojo.User"
+               extends="basicUserResultMap">
+        <collection property="orders" ofType="net.litchi.spring.ioc.pojo.Orders">
+            <id property="id" column="o_id"/>
+            <result property="number" column="number"/>
+            <result property="note" column="note"/>
+            <result property="createtime" column="createtime"/>
+            <collection property="orderDetails" ofType="net.litchi.spring.ioc.pojo.OrderDetail">
+                <id property="id" column="od_id"/>
+                <result property="itemsId" column="items_id"/>
+                <result property="itemsNum" column="items_num"/>
+            </collection>
+        </collection>
+    </resultMap>
+
+
+    <resultMap id="UserAndOrdersAndOrderDetailsAndItemsResultMap" type="net.litchi.spring.ioc.pojo.User"
+               extends="basicUserResultMap">
+        <collection property="orders" ofType="net.litchi.spring.ioc.pojo.Orders">
+            <id property="id" column="o_id"/>
+            <result property="number" column="number"/>
+            <result property="note" column="note"/>
+            <result property="createtime" column="createtime"/>
+            <collection property="orderDetails" ofType="net.litchi.spring.ioc.pojo.OrderDetail">
+                <id property="id" column="od_id"/>
+                <result property="itemsId" column="items_id"/>
+                <result property="itemsNum" column="items_num"/>
+                <association property="items" javaType="net.litchi.spring.ioc.pojo.Items">
+                    <id property="id" column="i_id"/>
+                    <result property="name" column="name"/>
+                    <result property="price" column="price"/>
+                    <result property="detail" column="detail"/>
+                    <result property="pic" column="pic"/>
+                    <result property="createtime" column="i_createtime"/>
+                </association>
+            </collection>
+        </collection>
+    </resultMap>
+
+
+
+    <select id="selectAllUserAndOrders" resultMap="UserAndOrdersAndOrderDetailsAndItemsResultMap">
+        SELECT u.*,
+               o.id         AS o_id,
+               o.note,
+               o.number,
+               o.createtime,
+               od.id        as od_id,
+               od.items_id,
+               od.items_num,
+               i.id         AS i_id,
+               i.`name`,
+               i.pic,
+               i.price,
+               i.detail,
+               i.createtime AS i_createtime
+        FROM USER u
+                 RIGHT JOIN orders o ON u.id = o.user_id
+                 RIGHT JOIN orderdetail od ON o.id = od.orders_id
+                 LEFT JOIN items i ON od.items_id = i.id
+
+    </select>
+
+
 </mapper>
