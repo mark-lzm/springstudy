@@ -5,14 +5,62 @@
         from user
     </select>
 
-    <select id="selectUserLikeName" parameterType="string" resultType="net.litchi.spring.ioc.pojo.User" >
-        select * from user u where u.username like '%${value}%'
+    <!--
+        #{} 会自动判断传入的参数的类型  如果是String 会自动加上单引号
+        ${} 不变，直接输出
+      -->
+    <!--
+           select *
+            from user u
+            where u.username like '%'mt'%'
+    -->
+
+    <select id="selectUserLikeName" parameterType="string" resultType="net.litchi.spring.ioc.pojo.User">
+        select *
+        from user u
+        where u.username like '%${value}%'
     </select>
+
+    <select id="selectUserByHashMap" parameterType="hashmap" resultType="net.litchi.spring.ioc.pojo.User">
+        select *
+        from user u
+        where u.username like '%${username}%'
+          and u.password = #{password}
+    </select>
+
+    <select id="selectUserByUserQueryVo" parameterType="hashmap" resultType="net.litchi.spring.ioc.pojo.vo.UserQueryVo">
+        select *
+        from user u
+        where u.username like '%${username}%'
+          and u.password = #{password}
+    </select>
+
+
+
+    <!--安全与性能-->
+    <!--开发成本和运维成本-->
 
     <!--    增删改，固定返回值都是int类型，表示sql语句影响了多少条记录-->
     <insert id="insertUser" parameterType="net.litchi.spring.ioc.pojo.User">
         insert into user(id, username, birthday, sex, address, password, mobile)
         values (#{id}, #{username}, #{birthday}, #{sex}, #{address}, #{password}, #{mobile})
     </insert>
+
+
+    <insert id="insertUserUuid" parameterType="net.litchi.spring.ioc.pojo.User">
+        <selectKey order="BEFORE" keyProperty="id" resultType="String">
+            select UUID()
+        </selectKey>
+        insert into user(id, username, birthday, sex, address, password, mobile)
+        values (#{id}, #{username}, #{birthday}, #{sex}, #{address}, #{password}, #{mobile})
+    </insert>
+
+    <update id="updateUserByUserId" parameterType="net.litchi.spring.ioc.pojo.User">
+
+    </update>
+
+    <delete id="deleteUserByUserId" parameterType="net.litchi.spring.ioc.pojo.User">
+
+    </delete>
 
 </mapper>

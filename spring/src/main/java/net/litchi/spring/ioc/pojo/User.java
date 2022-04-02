@@ -3,6 +3,7 @@ package net.litchi.spring.ioc.pojo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -16,6 +17,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@SuperBuilder
 public class User implements Serializable {
     private String id;
     private String username;
@@ -26,8 +28,8 @@ public class User implements Serializable {
     private String mobile;
 
 
-    public int add(int a, int b) {
+   /* public int add(int a, int b) {
         return a + b;
-    }
+    }*/
 
 }
