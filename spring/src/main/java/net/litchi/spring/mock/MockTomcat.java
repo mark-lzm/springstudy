@@ -1,5 +1,6 @@
 package net.litchi.spring.mock;
 
+import net.litchi.spring.ioc.service.AccountService;
 import net.litchi.spring.ioc.web.servlet.UserServlet;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -57,7 +58,11 @@ public class MockTomcat {
         ApplicationContext context =
                 new ClassPathXmlApplicationContext("applicationContext.xml");
         UserServlet userServlet = (UserServlet) context.getBean("userServlet");
-        userServlet.doService();
+//        userServlet.doService();
+
+        AccountService accountServiceImpl = (AccountService) context.getBean("accountServiceImpl");
+        accountServiceImpl.transferTx(1, 2, 10);
+
 
      /*   MockServlet1 mockServlet1 = (MockServlet1) context.getBean("mockServlet1");
 
