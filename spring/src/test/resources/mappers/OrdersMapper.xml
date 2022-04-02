@@ -1,0 +1,9 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.litchi.spring.ioc.dao.OrdersMapper">
+
+    <select id="getOrdersByUserId" resultType="net.litchi.spring.ioc.pojo.Orders">
+        select *
+        from orders o
+        where o.user_id = #{userId}
+    </select>
+</mapper>

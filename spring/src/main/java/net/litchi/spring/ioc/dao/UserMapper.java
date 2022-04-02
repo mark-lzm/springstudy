@@ -40,4 +40,7 @@ public interface UserMapper {
     List<User> selectUserByQueryVo(UserQueryVo vo);
 
     List<User> selectAllUserAndOrders();
+
+
+    List<User> getUserAndOrdersLazyLoad();
 }

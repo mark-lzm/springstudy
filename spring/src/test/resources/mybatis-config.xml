@@ -3,11 +3,19 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <properties resource="jdbc.properties"/>
-    
+
+    <!--
+    懒加载
+    缓存
+    -->
     <settings>
         <setting name="logImpl" value="STDOUT_LOGGING"/>
+        <!-- 是否开启延迟加载,如果开启的话所有  关联对象  都会延迟加载 -->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <!-- 是否启用关联对象属性的延迟加载,如果启用,对任意延迟属性的调用都会使用带有延迟加载属性的对象完整加载,否则每种属性都按需加载 -->
+        <setting name="aggressiveLazyLoading" value="false"/>
     </settings>
-    
+
     <environments default="default">
         <!--
         software as a service
@@ -26,9 +34,10 @@
             </dataSource>
         </environment>
     </environments>
-    
+
 
     <mappers>
         <mapper resource="mappers/UserMapper.xml"/>
+        <mapper resource="mappers/OrdersMapper.xml"/>
     </mappers>
 </configuration>

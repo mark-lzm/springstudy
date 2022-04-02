@@ -91,6 +91,19 @@ public class MybatisMain {
         });
     }
 
+    @Test
+    public void getUserAndOrdersLazyLoad(){
+        userMapper.getUserAndOrdersLazyLoad().forEach(user -> {
+          /*  user.getOrders().forEach(orders -> {
+                System.out.println(orders);
+            });*/
+            if(user.getId().equals("1")){
+                user.getOrders().forEach(orders -> {
+                    System.out.println(orders);
+                });
+            }
+        });
+    }
     @After
     public void afterTest() {
         sqlSession.commit();

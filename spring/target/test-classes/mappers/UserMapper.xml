@@ -208,7 +208,6 @@
     </resultMap>
 
 
-
     <select id="selectAllUserAndOrders" resultMap="UserAndOrdersAndOrderDetailsAndItemsResultMap">
         SELECT u.*,
                o.id         AS o_id,
@@ -229,6 +228,20 @@
                  RIGHT JOIN orderdetail od ON o.id = od.orders_id
                  LEFT JOIN items i ON od.items_id = i.id
 
+    </select>
+
+
+    <resultMap id="userAndOrdersLazyLoadResultMap" type="net.litchi.spring.ioc.pojo.User"
+               extends="basicUserResultMap">
+        <collection property="orders"
+                    ofType="net.litchi.spring.ioc.pojo.Orders"
+                    select="net.litchi.spring.ioc.dao.OrdersMapper.getOrdersByUserId"
+                    column="id"/>
+    </resultMap>
+
+    <select id="getUserAndOrdersLazyLoad" resultMap="userAndOrdersLazyLoadResultMap">
+        select *
+        from user u
     </select>
 
 
