@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd ">
+
+    <!--基于xml配置文件配置 分发请求路径  分别有BeanNameUrlHandlerMapping和SimpleUrlHandlerMapping等等，
+    均是AbstractHandlerMapping的子类 -->
+    <bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>
+
+    <bean id="helloController" name="/hello1,/hello2" class="net.litchi.springmvc.web.controller.HelloController"/>
+
+    <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="mappings">
+            <props>
+                <prop key="/hello3">helloController</prop>
+                <prop key="/hello4">helloController</prop>
+            </props>
+        </property>
+    </bean>
+
+</beans>

@@ -1,0 +1,34 @@
+<!DOCTYPE web-app PUBLIC
+        "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+        "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+
+    <!--DispatcherServlet-->
+    <servlet>
+        <servlet-name>dispatcherServlet</servlet-name>
+        <!--
+            DispatcherServlet是Spring MVC最核心的对象
+            DispatcherServlet用于拦截Http请求
+            并根据请求的URL调用与之对应的Controller方法，来完成Http的请求
+        -->
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <!--applicationContext-mvc.xml-->
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:applicationContext-mvc.xml</param-value>
+        </init-param>
+        <!--
+            在Web应用启动时自动创建Spring IoC容器，
+            并初始化DispatcherServlet
+        -->
+        <load-on-startup>0</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>dispatcherServlet</servlet-name>
+        <!--"/"代表拦截所有请求(包括静态资源)  而/*则获取动态资源-->
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+    
+</web-app>
