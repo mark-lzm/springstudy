@@ -35,7 +35,7 @@
           and u.password = #{password}
     </select>
 
-    <select id="selectUserById" resultType="net.litchi.spring.ioc.pojo.User" parameterType="String">
+    <select  flushCache="false" useCache="true"  id="selectUserById" resultType="net.litchi.spring.ioc.pojo.User" parameterType="String">
         select *
         from user
         where id = #{value}
@@ -245,4 +245,6 @@
     </select>
 
 
+    <!--开启二级缓存-->
+    <cache/>
 </mapper>

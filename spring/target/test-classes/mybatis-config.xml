@@ -14,6 +14,9 @@
         <setting name="lazyLoadingEnabled" value="true"/>
         <!-- 是否启用关联对象属性的延迟加载,如果启用,对任意延迟属性的调用都会使用带有延迟加载属性的对象完整加载,否则每种属性都按需加载 -->
         <setting name="aggressiveLazyLoading" value="false"/>
+
+        <!--全局使能二级缓存-->
+        <setting name="cacheEnabled" value="true"/>
     </settings>
 
     <environments default="default">

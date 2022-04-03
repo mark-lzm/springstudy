@@ -82,13 +82,34 @@ public class MybatisMain {
 
     @Test
     public void selectAllUserAndOrdersTest(){
-        userMapper.selectAllUserAndOrders().forEach(user -> {
+       /* userMapper.selectAllUserAndOrders().forEach(user -> {
             user.getOrders().forEach(orders -> {
                 orders.getOrderDetails().forEach(orderDetail -> {
                     System.out.println(orderDetail.getItems());
                 });
             });
-        });
+        });*/
+        userMapper.selectAllUserAndOrders();
+        sqlSession.commit();
+        sqlSession.close();
+
+        SqlSession sqlSession2 = sqlSessionFactory.openSession();
+        /*当在不同的事务中调用同一条sql语句并且参数相同，中间没有执行flashcach操作的时候
+        * 当第一次事务提交的之后，会将结果缓存到磁盘上*/
+        UserMapper mapper2 = sqlSession2.getMapper(UserMapper.class);
+        mapper2.selectAllUserAndOrders();
+        sqlSession2.commit();
+        sqlSession2.close();
+
+        /*一级缓存*/
+        /*中间执行了会修改数据库的sql语句，就会清空缓存*/
+/*        User user = User.builder().id("104").build();
+        userMapper.deleteUser(user);
+
+        sqlSession.clearCache();*/
+
+//        userMapper.selectAllUserAndOrders();
+
     }
 
     @Test
@@ -104,7 +125,7 @@ public class MybatisMain {
             }
         });
     }
-    @After
+//    @After
     public void afterTest() {
         sqlSession.commit();
         sqlSession.close();
