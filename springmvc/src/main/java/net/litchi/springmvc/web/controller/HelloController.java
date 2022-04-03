@@ -3,8 +3,10 @@ package net.litchi.springmvc.web.controller;
 import lombok.AllArgsConstructor;
 import net.litchi.springmvc.pojo.bo.TestBo;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -58,7 +60,7 @@ public class HelloController {
                        String[] checkbox,
                        @RequestParam Map<String, String[]> params,
                        TestBo bo) {
-        params.keySet().forEach(key->{
+        params.keySet().forEach(key -> {
             System.out.println(key + ":" + params.get(key));
         });
 
@@ -72,5 +74,35 @@ public class HelloController {
         System.out.println(money);
     }
 
+
+    @RequestMapping("/5")
+    public String hello5() {
+        System.out.println("5");
+        //转发
+        return "/index.html";
+    }
+
+    @RequestMapping("/6")
+    public String hello6() {
+        System.out.println("6");
+        //重定向
+        return "redirect:https://www.baidu.com";
+    }
+
+    @RequestMapping("/7")
+    public String hello7(ModelMap modelMap) {
+        modelMap.addAttribute("username", "12346");
+//        return "index";
+        //不过模板引擎
+        return "foward:/WEB-INF/jsp/index.html";
+    }
+
+    @RequestMapping("/8")
+    public ModelAndView hello8(ModelMap modelMap) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("username", "123456");
+        modelAndView.setViewName("index");
+        return modelAndView;
+    }
 
 }

@@ -20,6 +20,14 @@
     <!--SpringMVC提供的通用资源放行方式-->
     <mvc:default-servlet-handler/>
 
+
+    <!--    模板引擎-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <!--配置前缀与后缀-->
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
     <!--基于xml配置文件配置 分发请求路径  分别有BeanNameUrlHandlerMapping和SimpleUrlHandlerMapping等等，
     均是AbstractHandlerMapping的子类 -->
     <!--
