@@ -16,10 +16,17 @@ spring:
 #默认配置
 #mybatis:
 #  configuration:
-#    aggressive-lazy-loading: true
+#    aggressive-lazy-loading: false
 #    cache-enabled: true
 #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 #    lazy-loading-enabled: true
 mybatis:
   mapper-locations:
     - classpath*:mappers/**/*.xml
+
+net:
+  litchi:
+    showapi:
+      appid: 899049
+      appsecret: 887d838bfb0b45e99dfedd9ab6cd8d29
+      covid: http://route.showapi.com/2217-2

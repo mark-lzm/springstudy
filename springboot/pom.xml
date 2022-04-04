@@ -62,6 +62,12 @@
             <version>2.2.2</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.showapi.javasdk</groupId>
+            <artifactId>showapi_java_sdk</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
     </dependencies>
 
     <!--<build>

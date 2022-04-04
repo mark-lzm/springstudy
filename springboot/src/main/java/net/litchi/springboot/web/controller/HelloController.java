@@ -1,8 +1,12 @@
 package net.litchi.springboot.web.controller;
 
+import com.show.api.ShowApiRequest;
+import lombok.AllArgsConstructor;
+import net.litchi.springboot.common.ProjectProperties;
 import net.litchi.springboot.mapper.UserMapper;
 import net.litchi.springboot.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,10 +22,20 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/hello")
+@AllArgsConstructor
 public class HelloController {
 
-    @Autowired
     private UserMapper userMapper;
+    private ProjectProperties properties;
+/*
+    @Value("${net.litchi.showapi.covid}")
+    private String url;
+    @Value("${net.litchi.showapi.appid}")
+    private String appid;
+    @Value("${net.litchi.showapi.appsecret}")
+    private String appsecret;
+*/
+
 
     @GetMapping
     public String sayHello() {
@@ -39,6 +53,15 @@ public class HelloController {
     @ResponseBody
     public List<User> getAllUser() {
         return userMapper.getAllUser();
+    }
+
+    @GetMapping("/covid")
+    @ResponseBody
+    public String getCovidData() {
+//        return new ShowApiRequest(url, appid, appsecret).post();
+        return new ShowApiRequest(properties.getShowapi().getCovid(),
+                properties.getShowapi().getAppid(),
+                properties.getShowapi().getAppsecret()).post();
     }
 
 }
