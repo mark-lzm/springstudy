@@ -1,0 +1,19 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+spring:
+  datasource:
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/mybatis?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=UTC
+      username: root
+      password: 123456
+mybatis:
+  configuration:
+    aggressive-lazy-loading: true
+    cache-enabled: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    lazy-loading-enabled: true
+  mapper-locations:
+    - classpath*:mappers/**/*.xml
