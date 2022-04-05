@@ -27,6 +27,10 @@ spring:
     servlet:
       content-type: text/html;charset=utf-8
 
+logging:
+  level:
+    net.litchi: DEBUG
+    org.springframework: INFO
 #默认配置
 #mybatis:
 #  configuration:
