@@ -4,6 +4,7 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import springfox.documentation.oas.annotations.EnableOpenApi;
 
@@ -21,6 +22,9 @@ import springfox.documentation.oas.annotations.EnableOpenApi;
 
 /*引入Swagger3*/
 @EnableOpenApi
+
+/*开启异步任务*/
+@EnableAsync
 public class SpringbootApplication {
 
     public static void main(String[] args) {

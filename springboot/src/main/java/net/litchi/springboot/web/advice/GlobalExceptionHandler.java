@@ -31,12 +31,5 @@ public class GlobalExceptionHandler {
         return JSONResult.errorException("算术异常");
     }
 
-    @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    //@ResponseBody
-    public JSONResult handleException1(Exception e){
-        log.error("Default Exception : ", e);
-        return JSONResult.errorException(e.getLocalizedMessage());
-    }
 
 }
