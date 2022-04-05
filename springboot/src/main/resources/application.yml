@@ -18,6 +18,15 @@ spring:
     port: 6379
     host: 192.168.16.3
     timeout: 5000
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
+    encoding: UTF-8
+    servlet:
+      content-type: text/html;charset=utf-8
+
 #默认配置
 #mybatis:
 #  configuration:

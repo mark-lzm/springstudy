@@ -6,5 +6,46 @@
 </head>
 <body>
 <p>this is templates index.html</p>
+<!--
+th:text 替换标签中的内容，直到第一个块级元素位置
+th:utext: 如果内容是一个html代码，那么代码会在页面上解析
+th:other (例如th:zm th:style) 会替换开始标签中对应的属性
+-->
+<p th:text="${username}">this is a data</p>
+<p th:text="${desc}">
+    this is a data
+    <span>s1s1</span>
+    s1jk
+</p>
+<p th:utext="${desc}">this is a data</p>
+<!-- :xx 就是替换xx属性以及属性的值-->
+<p th:zm="${username}">this is a data</p>
+<p th:zm="${desc}">this is a data</p>
+
+<table>
+    <tr>
+        <th>id</th>
+        <th>username</th>
+        <th>birthday</th>
+        <th>sex</th>
+        <th>address</th>
+        <th>password</th>
+        <th>mobile</th>
+    </tr>
+    <tr th:each="user:${users}">
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.username}"></td>
+        <td th:text="${user.birthday}"></td>
+        <td th:text="${user.sex}"></td>
+        <td th:text="${user.address}"></td>
+        <td th:text="${user.password}"></td>
+        <td th:text="${user.mobile}"></td>
+    </tr>
+</table>
+
+<p th:if="${user.sex} eq 'm'">
+    用户是男性
+</p>
+<p th:text="${user.sex}"></p>
 </body>
 </html>
