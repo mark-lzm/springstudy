@@ -65,6 +65,13 @@ public class HelloController {
         return JSONResult.ok("success");
     }
 
+    @GetMapping("/error")
+    @ResponseBody
+    public JSONResult helloError() throws Exception {
+//        int i = 10 / 0;
+        throw new Exception("测试bug");
+    }
+
     @GetMapping("/covid")
     @ResponseBody
     public String getCovidData() {
