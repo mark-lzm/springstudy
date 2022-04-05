@@ -1,17 +1,18 @@
 package net.litchi.springboot.web.controller;
 
 import com.show.api.ShowApiRequest;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
 import net.litchi.springboot.common.ProjectProperties;
 import net.litchi.springboot.mapper.UserMapper;
 import net.litchi.springboot.pojo.User;
+import net.litchi.springboot.util.JSONResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,6 +24,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/hello")
 @AllArgsConstructor
+@Api(tags = "测试控制器")
 public class HelloController {
 
     private UserMapper userMapper;
@@ -53,6 +55,14 @@ public class HelloController {
     @ResponseBody
     public List<User> getAllUser() {
         return userMapper.getAllUser();
+    }
+
+
+    @ApiOperation("按照restful风格增加用户")
+    @PostMapping
+    @ResponseBody
+    public JSONResult insertUser(@RequestBody @ApiParam("传入对象本身") User user) {
+        return JSONResult.ok("success");
     }
 
     @GetMapping("/covid")
