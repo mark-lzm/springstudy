@@ -54,6 +54,8 @@
             <version>2.1.5</version>
         </dependency>
 
+
+
         <!--分页查询-->
         <dependency>
             <groupId>com.github.pagehelper</groupId>
@@ -169,10 +171,10 @@
         </dependency>
 
         <!--session 创建分发以及管理模块-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.session</groupId>-->
-<!--            <artifactId>spring-session</artifactId>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.session</groupId>-->
+        <!--            <artifactId>spring-session</artifactId>-->
+        <!--        </dependency>-->
     </dependencies>
 
 </project>
