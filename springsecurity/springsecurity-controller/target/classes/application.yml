@@ -1,0 +1,41 @@
+spring:
+  session:
+    store-type: NONE
+  redis:
+    password: 123456
+    host: 192.168.16.3
+    timeout: 5000
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  datasource:
+    druid:
+      url: jdbc:mysql://localhost:3306/springsecurity?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=UTC
+      username: root
+      password: root
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      connect-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      #      filters: stat,wall,log4j
+      initialSize: 5
+      maxActive: 20
+      maxPoolPreparedStatementPerConnectionSize: 20
+      maxWait: 60000
+      minEvictableIdleTimeMillis: 300000
+      minIdle: 5
+      poolPreparedStatements: true
+      testOnBorrow: false
+      testOnReturn: false
+      testWhileIdle: true
+      timeBetweenEvictionRunsMillis: 60000
+      type: com.alibaba.druid.pool.DruidDataSource
+      validationQuery: SELECT 1 FROM DUAL
+logging:
+  level:
+    net.seehope: debug
+    org.springframework: info
+mybatis:
+  configuration:
+    aggressive-lazy-loading: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    lazy-loading-enabled: true
+  mapper-locations: classpath*:mappers/**/*.xml
