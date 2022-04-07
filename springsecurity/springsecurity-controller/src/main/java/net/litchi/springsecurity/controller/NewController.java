@@ -19,6 +19,12 @@ public class NewController {
 
     private NewService newService;
 
+
+    /**
+     * filter aop interceptor
+     * @return
+     */
+
     @GetMapping
     public JSONResult getNews(){
         return JSONResult.ok(newService.getNews());
