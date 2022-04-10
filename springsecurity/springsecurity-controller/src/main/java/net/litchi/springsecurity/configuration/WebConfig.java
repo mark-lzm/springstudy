@@ -17,7 +17,7 @@ import java.util.List;
  * @Author Mark
  * @Date 2022/4/7 20:32
  */
-@Configuration
+//@Configuration
 @AllArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
 
