@@ -39,3 +39,8 @@ mybatis:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     lazy-loading-enabled: true
   mapper-locations: classpath*:mappers/**/*.xml
+
+net:
+  litchi:
+    web:
+      loginType: JSON

@@ -7,6 +7,7 @@ package net.litchi.springsecurity.properties;
  */
 
 import lombok.Data;
+import net.litchi.springsecurity.enums.LoginType;
 
 /**
  * 封装web相关的工程常量
@@ -29,4 +30,8 @@ public class WebProperties {
      * 登录表单用密码参数
      */
     private String passwordParm = "password";
+    /**
+     * 登录方式，默认情况下，登录成功之后，行为重定向
+     */
+    private LoginType loginType = LoginType.REDIRACT;
 }
