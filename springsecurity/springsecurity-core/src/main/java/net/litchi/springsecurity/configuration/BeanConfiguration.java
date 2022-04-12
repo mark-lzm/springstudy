@@ -8,6 +8,8 @@ import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
+import org.springframework.social.connect.web.HttpSessionSessionStrategy;
+import org.springframework.social.connect.web.SessionStrategy;
 
 /**
  * @Description
@@ -30,6 +32,11 @@ public class BeanConfiguration {
     @Bean
     public RedirectStrategy redirectStrategy() {
         return new DefaultRedirectStrategy();
+    }
+
+    @Bean
+    public SessionStrategy sessionStrategy(){
+        return new HttpSessionSessionStrategy();
     }
 
 }

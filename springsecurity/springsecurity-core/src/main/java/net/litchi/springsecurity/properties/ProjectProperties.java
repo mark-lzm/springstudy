@@ -18,4 +18,5 @@ import org.springframework.context.annotation.Configuration;
 @Data
 public class ProjectProperties {
     private WebProperties web = new WebProperties();
+    private ValidateCodeProperties validateCode = new ValidateCodeProperties();
 }

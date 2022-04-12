@@ -60,7 +60,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 //表示当前对授权模块进行配置
             .authorizeRequests()
                 //当请求匹配到对应的地址
-                .antMatchers(ProjectConstant.UNAUTHORIZED_URL, web.getLoginPage(), web.getLoginProcessingUrl())
+                .antMatchers(ProjectConstant.UNAUTHORIZED_URL, web.getLoginPage(), web.getLoginProcessingUrl()
+                ,ProjectConstant.IMAGE_VALIDATE_CODE_GENERATE_URL)
                 //允许请求放行
                 .permitAll()
                 //选中的所有请求
