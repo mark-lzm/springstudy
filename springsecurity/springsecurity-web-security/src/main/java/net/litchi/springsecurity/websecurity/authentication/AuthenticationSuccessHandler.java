@@ -32,12 +32,12 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
     private ObjectMapper objectMapper;
 
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException, ServletException {
-        if (projectProperties.getWeb().getLoginType().equals(LoginType.JSON)) {
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
+        if (LoginType.JSON.equals(projectProperties.getWeb().getLoginType())) {
             response.setContentType("application/json;charset=utf-8");
             response.getWriter().write(objectMapper.writeValueAsString(authentication));
         } else {
-            super.onAuthenticationSuccess(request, response, chain, authentication);
+            super.onAuthenticationSuccess(request, response, authentication);
         }
     }
 }
