@@ -34,4 +34,9 @@ public class ImageValidateCodeProperties {
      */
     private String paramName = "imageValidateCode";
 
+    /**
+     * 那些url需要图片验证码验证通过之后才能访问，可以有多个，中间以逗号隔开
+     */
+    private String urls = ProjectConstant.LOGIN_PROCESSING_URL;
+
 }

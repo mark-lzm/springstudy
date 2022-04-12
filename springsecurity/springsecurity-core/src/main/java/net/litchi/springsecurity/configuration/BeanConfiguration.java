@@ -10,6 +10,7 @@ import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.social.connect.web.HttpSessionSessionStrategy;
 import org.springframework.social.connect.web.SessionStrategy;
+import org.springframework.util.AntPathMatcher;
 
 /**
  * @Description
@@ -37,6 +38,11 @@ public class BeanConfiguration {
     @Bean
     public SessionStrategy sessionStrategy(){
         return new HttpSessionSessionStrategy();
+    }
+
+    @Bean
+    public AntPathMatcher antPathMatcher(){
+        return new AntPathMatcher();
     }
 
 }

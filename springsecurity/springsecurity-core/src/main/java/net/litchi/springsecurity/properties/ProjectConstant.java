@@ -13,6 +13,11 @@ public class ProjectConstant {
     public static final String UNAUTHORIZED_URL = "/authentication/require";
 
     /**
+     * 默认用户名密码登录请求处理URL
+     */
+    public static final String LOGIN_PROCESSING_URL = "/authentication/form";
+
+    /**
      * 图片验证码生成的URL
      */
     public static final String  IMAGE_VALIDATE_CODE_GENERATE_URL= "/validate/image";

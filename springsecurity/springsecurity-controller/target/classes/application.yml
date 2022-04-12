@@ -44,3 +44,6 @@ net:
   litchi:
     web:
       loginType: JSON
+    validateCode:
+      imageValidateCode:
+        urls: '/authentication/form,/authentication/test'
