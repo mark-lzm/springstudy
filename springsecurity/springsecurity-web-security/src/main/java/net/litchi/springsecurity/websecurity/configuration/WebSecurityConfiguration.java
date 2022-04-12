@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import net.litchi.springsecurity.properties.ProjectConstant;
 import net.litchi.springsecurity.properties.ProjectProperties;
 import net.litchi.springsecurity.properties.WebProperties;
+import net.litchi.springsecurity.validate.ValidateCodeFilter;
 import net.litchi.springsecurity.websecurity.authentication.AuthenticationFailureHandler;
 import net.litchi.springsecurity.websecurity.authentication.AuthenticationSuccessHandler;
 import org.springframework.context.annotation.Bean;
@@ -12,6 +13,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
  * 1.认证
@@ -37,12 +39,18 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     private AuthenticationSuccessHandler authenticationSuccessHandler;
     private AuthenticationFailureHandler authenticationFailureHandler;
 
+    private ValidateCodeFilter validateCodeFilter;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
         WebProperties web = properties.getWeb();
 
-        http.formLogin()//当前使用表单认证，之后的配置都是对表单登录模块的详细配置
+        /**
+         * 在访问用户密码登录之前，需要先访问验证码过滤器
+         */
+        http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
+            .formLogin()//当前使用表单认证，之后的配置都是对表单登录模块的详细配置
                 //修改登录页面，当用户没有权限的时候，往那里跳转  get
                 .loginPage(ProjectConstant.UNAUTHORIZED_URL)
                 //登录请求的访问路径 post

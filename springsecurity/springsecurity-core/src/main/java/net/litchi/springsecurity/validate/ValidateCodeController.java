@@ -41,7 +41,7 @@ public class ValidateCodeController {
         //2.将验证码储存到session
         sessionStrategy.setAttribute(new ServletWebRequest(request, response),
                 ProjectConstant.IMAGE_VALIDATE_CODE_IN_SESSION,
-                imageValidateCode.getCode());
+                imageValidateCode);
         //3.响应验证码到前端
         ImageIO.write(imageValidateCode.getImage(),
                 "JPEG",

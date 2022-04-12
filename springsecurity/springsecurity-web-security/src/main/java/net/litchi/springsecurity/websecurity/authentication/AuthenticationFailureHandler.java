@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import net.litchi.springsecurity.enums.LoginType;
 import net.litchi.springsecurity.properties.ProjectProperties;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
@@ -28,8 +29,10 @@ public class AuthenticationFailureHandler extends SimpleUrlAuthenticationFailure
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
         if (projectProperties.getWeb().getLoginType().equals(LoginType.JSON)) {
+            exception.printStackTrace();
+            response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
             response.setContentType("application/json;charset=utf-8");
-            response.getWriter().write(objectMapper.writeValueAsString(exception));
+            response.getWriter().write(objectMapper.writeValueAsString(exception.getLocalizedMessage()));
         } else {
             super.onAuthenticationFailure(request, response, exception);
         }

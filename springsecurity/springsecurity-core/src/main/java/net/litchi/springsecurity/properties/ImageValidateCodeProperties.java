@@ -28,4 +28,10 @@ public class ImageValidateCodeProperties {
      * 验证码过期时间
      */
     private Integer expiredIn = 15 * 60;
+
+    /**
+     * 图片验证码参数
+     */
+    private String paramName = "imageValidateCode";
+
 }
