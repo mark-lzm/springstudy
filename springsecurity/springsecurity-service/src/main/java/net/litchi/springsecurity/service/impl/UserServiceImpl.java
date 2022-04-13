@@ -38,8 +38,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         User user = userMapper.selectByPrimaryKey(username);
 
         System.out.println(passwordEncoder.encode("123456"));
-        System.out.println(passwordEncoder.encode("123456"));
-        System.out.println(passwordEncoder.encode("123456"));
 
 
         org.springframework.security.core.userdetails.User result = new org.springframework.security.core.userdetails.User(user.getId(), user.getPassword(),

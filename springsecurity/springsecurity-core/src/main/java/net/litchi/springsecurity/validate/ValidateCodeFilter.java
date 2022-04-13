@@ -5,6 +5,7 @@ import net.litchi.springsecurity.properties.ProjectConstant;
 import net.litchi.springsecurity.properties.ProjectProperties;
 import net.litchi.springsecurity.validate.code.ValidateCode;
 import net.litchi.springsecurity.validate.exception.ValidateCodeException;
+import net.litchi.springsecurity.validate.processor.ValidateCodeProcessor;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -21,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -35,8 +37,9 @@ import java.util.Set;
 public class ValidateCodeFilter extends OncePerRequestFilter implements InitializingBean {
 
     private ProjectProperties projectProperties;
-    private SessionStrategy sessionStrategy;
     private AuthenticationFailureHandler authenticationFailureHandler;
+
+    private List<ValidateCodeProcessor> validateCodeProcessors;
 
     /**
      * /authentication/*
@@ -77,7 +80,13 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
 
         if (flag) {
             try {
-                validate(new ServletWebRequest(request, response));
+                for (ValidateCodeProcessor validateCodeProcessor : validateCodeProcessors) {
+                    //循环查找适合的处理器，是否需要验证
+                    if (validateCodeProcessor.IsValidate(StringUtils.substringAfter(request.getRequestURI(),
+                            ProjectConstant.AUTHENTICATION_URI + "/"))) {
+                        validateCodeProcessor.validate(new ServletWebRequest(request, response));
+                    }
+                }
                 filterChain.doFilter(request, response);
             } catch (AuthenticationException e) {
                 authenticationFailureHandler.onAuthenticationFailure(request, response, e);
@@ -85,30 +94,5 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
         } else {
             filterChain.doFilter(request, response);
         }
-    }
-
-    public void validate(ServletWebRequest servletWebRequest) {
-        String codeInRequest = servletWebRequest.getRequest().getParameter(projectProperties.getValidateCode().getImageValidateCode().getParamName());
-        ValidateCode codeInSession = (ValidateCode) sessionStrategy.getAttribute(servletWebRequest, ProjectConstant.VALIDATE_CODE_IN_SESSION);
-        if (StringUtils.isBlank(codeInRequest)) {
-            throw new ValidateCodeException("验证码的值不能为空");
-        }
-
-        if (codeInSession == null) {
-            throw new ValidateCodeException("验证码不存在");
-        }
-
-        if (codeInSession.isExpire()) {
-            // 销毁验证码
-            sessionStrategy.removeAttribute(servletWebRequest, ProjectConstant.VALIDATE_CODE_IN_SESSION);
-            throw new ValidateCodeException("验证码已过期");
-        }
-
-        if (!StringUtils.equals(codeInSession.getCode(), codeInRequest)) {
-            throw new ValidateCodeException("验证码不匹配,请重新输入");
-        }
-
-        // 每次登录请求提交，不管成功没成功都刷新验证码
-        sessionStrategy.removeAttribute(servletWebRequest, ProjectConstant.VALIDATE_CODE_IN_SESSION);
     }
 }

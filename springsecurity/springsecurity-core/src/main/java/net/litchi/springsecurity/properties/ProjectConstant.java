@@ -23,6 +23,11 @@ public class ProjectConstant {
     public static final String MOBILE_LOGIN_PROCESSING_URL = "/authentication/mobile";
 
     /**
+     * 默认认证的URL前缀
+     */
+    public static final String AUTHENTICATION_URI = "/authentication";
+
+    /**
      * 默认处理验证码的URL前缀
      * 会通过验证码过滤器
      */
@@ -32,6 +37,16 @@ public class ProjectConstant {
      * 默认验证码在session中的变量名
      */
     public static final String VALIDATE_CODE_IN_SESSION = "VALIDATE_CODE_IN_SESSION";
+
+
+    /**
+     * 默认从请求中获取图片验证码的字段名，name
+     */
+    public static final String DEFAULT_PARAMETER_NAME_CODE_IMAGE = "imageValidateCode";
+    /**
+     * 默认从请求中获取短信验证码的字段名 name
+     */
+    public static final String DEFAULT_PARAMETER_NAME_CODE_SMS = "smsValidateCode";
 
 
 }
