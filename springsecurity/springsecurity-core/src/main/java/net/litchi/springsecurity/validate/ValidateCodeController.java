@@ -1,8 +1,10 @@
 package net.litchi.springsecurity.validate;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import net.litchi.springsecurity.properties.ProjectConstant;
 import net.litchi.springsecurity.properties.ProjectProperties;
+import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.social.connect.web.SessionStrategy;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +30,7 @@ import java.util.Random;
  */
 @Controller
 @AllArgsConstructor
+@Slf4j
 public class ValidateCodeController {
 
     private ProjectProperties properties;
@@ -46,6 +49,20 @@ public class ValidateCodeController {
         ImageIO.write(imageValidateCode.getImage(),
                 "JPEG",
                 response.getOutputStream());
+    }
+
+    @GetMapping(ProjectConstant.SMS_VALIDATE_CODE_GENERATE_URL)
+    public void getSmsValidateCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        //1.创建短信验证码
+        String code = RandomStringUtils.randomNumeric(properties.getValidateCode().getSmsValidateCode().getLength());
+        ValidateCode validateCode = new ValidateCode(code, properties.getValidateCode().getSmsValidateCode().getExpireIn());
+        //2.将验证码储存到session
+        sessionStrategy.setAttribute(new ServletWebRequest(request, response),
+                ProjectConstant.SMS_VALIDATE_CODE_IN_SESSION,
+                validateCode);
+        //3.发送验证码
+        log.debug("当前正在向手机号{}发送短信验证码{}", request.getParameter(properties.getValidateCode().getSmsValidateCode().getMobileParaName()), validateCode.getCode());
+
     }
 
     //创建图形二维码

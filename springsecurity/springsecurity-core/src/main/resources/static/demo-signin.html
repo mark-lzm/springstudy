@@ -5,29 +5,69 @@
     <title>Title</title>
 </head>
 <body>
-    <form action="/authentication/form" method="post">
-        <table>
-            <tr>
-                <td><label for="id">id</label> </td>
-                <td><input type="text" name="id" id="id" placeholder="id"></td>
-                <td><span id="id_msg"></span></td>
-            </tr>
-            <tr>
-                <td><label for="password">password</label> </td>
-                <td><input type="password" name="password" id="password" placeholder="password"></td>
-                <td><span id="password_msg"></span></td>
-            </tr>
-            <tr>
-                <td><label for="imageValidateCode">imageValidateCode</label> </td>
-                <td><input type="text" name="imageValidateCode" id="imageValidateCode" placeholder="imageValidateCode"></td>
-                <td><img id="imageValidateCode_msg" src="/validate/image"></img></td>
-            </tr>
-            <tr>
-                <td><input type="submit" value="submit"></td>
-                <td></td>
-                <td><input type="reset" value="reset"></td>
-            </tr>
-        </table>
-    </form>
+<form action="/authentication/form" method="post" enctype="application/x-www-form-urlencoded">
+    <table>
+        <tr>
+            <td><label for="id">id</label></td>
+            <td><input type="text" name="id" id="id" placeholder="id"></td>
+            <td><span id="id_msg"></span></td>
+        </tr>
+        <tr>
+            <td><label for="password">password</label></td>
+            <td><input type="password" name="password" id="password" placeholder="password"></td>
+            <td><span id="password_msg"></span></td>
+        </tr>
+        <tr>
+            <td><label for="imageValidateCode">imageValidateCode</label></td>
+            <td><input type="text" name="imageValidateCode" id="imageValidateCode" placeholder="imageValidateCode"></td>
+            <td><img id="imageValidateCode_msg" src="/validate/image"></img></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="submit"></td>
+            <td></td>
+            <td><input type="reset" value="reset"></td>
+        </tr>
+    </table>
+</form>
+
+
+<form action="/authentication/mobile" method="post" enctype="application/x-www-form-urlencoded">
+    <table>
+        <tr>
+            <td><label for="mobile">mobile</label></td>
+            <td><input type="text" name="mobile" id="mobile" placeholder="mobile" value="18000000000"></td>
+            <td><span id="mobile_msg"></span></td>
+        </tr>
+        <tr>
+            <td><label for="smsValidateCode">smsValidateCode:</label></td>
+            <td><input type="text" name="smsValidateCode" id="smsValidateCode" placeholder="smsValidateCode"></td>
+            <td>
+                <button id="sendSmsValidateCode" type="button">点击发送验证码</button>
+            </td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="submit"></td>
+            <td></td>
+            <td><input type="reset" value="reset"></td>
+        </tr>
+    </table>
+</form>
 </body>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#sendSmsValidateCode").click(function () {
+            $.ajax({
+                type: "get",
+                url: "validate/sms?mobile="+$('#mobile').val(),
+                success: function (data) {
+                    console.log(data)
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            })
+        })
+    })
+</script>
 </html>

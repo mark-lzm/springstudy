@@ -21,7 +21,12 @@ public class WebProperties {
     /**
      * 登录请求地址
      */
-    private String loginProcessingUrl = "/authentication/form";
+    private String loginProcessingUrl = ProjectConstant.LOGIN_PROCESSING_URL;
+
+    /**
+     * 手机登录请求地址
+     */
+    private String mobileLoginProcessingUrl = ProjectConstant.MOBILE_LOGIN_PROCESSING_URL;
     /**
      * 登录表单用户名参数
      */
