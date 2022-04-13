@@ -23,28 +23,15 @@ public class ProjectConstant {
     public static final String MOBILE_LOGIN_PROCESSING_URL = "/authentication/mobile";
 
     /**
-     * 图片验证码生成的URL
-     */
-    public static final String  IMAGE_VALIDATE_CODE_GENERATE_URL= "/validate/image";
-
-    /**
-     * 短信验证码生成的URL
-     */
-    public static final String  SMS_VALIDATE_CODE_GENERATE_URL= "/validate/sms";
-
-    /**
      * 默认处理验证码的URL前缀
      * 会通过验证码过滤器
      */
     public static final String VALIDATE_CODE_GENERATE_URL = "/validate";
 
     /**
-     * 默认图片验证码在session中的变量名
+     * 默认验证码在session中的变量名
      */
-    public static final String IMAGE_VALIDATE_CODE_IN_SESSION = "IMAGE_VALIDATE_CODE_IN_SESSION";
+    public static final String VALIDATE_CODE_IN_SESSION = "VALIDATE_CODE_IN_SESSION";
 
-    /**
-     * 默认短信验证码在session中的变量名
-     */
-    public static final String SMS_VALIDATE_CODE_IN_SESSION = "SMS_VALIDATE_CODE_IN_SESSION";
+
 }

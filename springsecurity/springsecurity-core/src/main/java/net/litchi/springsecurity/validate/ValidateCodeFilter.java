@@ -62,6 +62,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
 
         //默认拦截的地址，防止在yml文件设置为空则传进来是一个null
         urls.add(ProjectConstant.LOGIN_PROCESSING_URL);
+        urls.add(ProjectConstant.MOBILE_LOGIN_PROCESSING_URL);
     }
 
     @Override
@@ -88,7 +89,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
 
     public void validate(ServletWebRequest servletWebRequest) {
         String codeInRequest = servletWebRequest.getRequest().getParameter(projectProperties.getValidateCode().getImageValidateCode().getParamName());
-        ValidateCode codeInSession = (ValidateCode) sessionStrategy.getAttribute(servletWebRequest, ProjectConstant.IMAGE_VALIDATE_CODE_IN_SESSION);
+        ValidateCode codeInSession = (ValidateCode) sessionStrategy.getAttribute(servletWebRequest, ProjectConstant.VALIDATE_CODE_IN_SESSION);
         if (StringUtils.isBlank(codeInRequest)) {
             throw new ValidateCodeException("验证码的值不能为空");
         }
@@ -99,7 +100,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
 
         if (codeInSession.isExpire()) {
             // 销毁验证码
-            sessionStrategy.removeAttribute(servletWebRequest, ProjectConstant.IMAGE_VALIDATE_CODE_IN_SESSION);
+            sessionStrategy.removeAttribute(servletWebRequest, ProjectConstant.VALIDATE_CODE_IN_SESSION);
             throw new ValidateCodeException("验证码已过期");
         }
 
@@ -108,6 +109,6 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
         }
 
         // 每次登录请求提交，不管成功没成功都刷新验证码
-        sessionStrategy.removeAttribute(servletWebRequest, ProjectConstant.IMAGE_VALIDATE_CODE_IN_SESSION);
+        sessionStrategy.removeAttribute(servletWebRequest, ProjectConstant.VALIDATE_CODE_IN_SESSION);
     }
 }
