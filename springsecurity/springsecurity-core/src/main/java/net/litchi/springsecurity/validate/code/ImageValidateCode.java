@@ -1,7 +1,6 @@
-package net.litchi.springsecurity.validate;
+package net.litchi.springsecurity.validate.code;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.awt.image.BufferedImage;
 import java.time.LocalDateTime;

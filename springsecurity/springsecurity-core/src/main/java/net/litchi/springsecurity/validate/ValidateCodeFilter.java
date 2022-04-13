@@ -3,6 +3,8 @@ package net.litchi.springsecurity.validate;
 import lombok.AllArgsConstructor;
 import net.litchi.springsecurity.properties.ProjectConstant;
 import net.litchi.springsecurity.properties.ProjectProperties;
+import net.litchi.springsecurity.validate.code.ValidateCode;
+import net.litchi.springsecurity.validate.exception.ValidateCodeException;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;

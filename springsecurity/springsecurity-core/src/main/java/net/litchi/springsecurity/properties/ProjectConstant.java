@@ -33,6 +33,12 @@ public class ProjectConstant {
     public static final String  SMS_VALIDATE_CODE_GENERATE_URL= "/validate/sms";
 
     /**
+     * 默认处理验证码的URL前缀
+     * 会通过验证码过滤器
+     */
+    public static final String VALIDATE_CODE_GENERATE_URL = "/validate";
+
+    /**
      * 默认图片验证码在session中的变量名
      */
     public static final String IMAGE_VALIDATE_CODE_IN_SESSION = "IMAGE_VALIDATE_CODE_IN_SESSION";

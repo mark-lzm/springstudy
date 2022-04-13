@@ -1,4 +1,4 @@
-package net.litchi.springsecurity.validate;
+package net.litchi.springsecurity.validate.exception;
 
 
 import org.springframework.security.core.AuthenticationException;

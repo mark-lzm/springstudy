@@ -69,8 +69,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
                 //当请求匹配到对应的地址
                 .antMatchers(ProjectConstant.UNAUTHORIZED_URL,
-                        ProjectConstant.IMAGE_VALIDATE_CODE_GENERATE_URL,
-                        ProjectConstant.SMS_VALIDATE_CODE_GENERATE_URL,
+//                        ProjectConstant.IMAGE_VALIDATE_CODE_GENERATE_URL,
+//                        ProjectConstant.SMS_VALIDATE_CODE_GENERATE_URL,
+                        ProjectConstant.VALIDATE_CODE_GENERATE_URL + "/*",
                         web.getLoginPage(),
                         web.getLoginProcessingUrl(),
                         web.getMobileLoginProcessingUrl()

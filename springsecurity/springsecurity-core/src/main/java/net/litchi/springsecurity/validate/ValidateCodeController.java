@@ -4,25 +4,27 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.litchi.springsecurity.properties.ProjectConstant;
 import net.litchi.springsecurity.properties.ProjectProperties;
-import org.apache.commons.lang.RandomStringUtils;
+import net.litchi.springsecurity.validate.code.ImageValidateCode;
+import net.litchi.springsecurity.validate.processor.ValidateCodeProcessor;
 import org.springframework.social.connect.web.SessionStrategy;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.context.request.ServletWebRequest;
 
-import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.List;
 import java.util.Random;
 
 /**
  * 1.创建
  * 2.存储
  * 3.发送
+ * 4.验证
  *
  * @Description
  * @Author Mark
@@ -31,39 +33,51 @@ import java.util.Random;
 @Controller
 @AllArgsConstructor
 @Slf4j
+@RequestMapping(ProjectConstant.VALIDATE_CODE_GENERATE_URL)
 public class ValidateCodeController {
 
     private ProjectProperties properties;
-
     private SessionStrategy sessionStrategy;
+    private List<ValidateCodeProcessor> validateCodeProcessors;
 
-    @GetMapping(ProjectConstant.IMAGE_VALIDATE_CODE_GENERATE_URL)
-    public void getImageValidateCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        //1.创建图片验证码
-        ImageValidateCode imageValidateCode = createImageCode();
-        //2.将验证码储存到session
-        sessionStrategy.setAttribute(new ServletWebRequest(request, response),
-                ProjectConstant.IMAGE_VALIDATE_CODE_IN_SESSION,
-                imageValidateCode);
-        //3.响应验证码到前端
-        ImageIO.write(imageValidateCode.getImage(),
-                "JPEG",
-                response.getOutputStream());
-    }
-
-    @GetMapping(ProjectConstant.SMS_VALIDATE_CODE_GENERATE_URL)
-    public void getSmsValidateCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        //1.创建短信验证码
-        String code = RandomStringUtils.randomNumeric(properties.getValidateCode().getSmsValidateCode().getLength());
-        ValidateCode validateCode = new ValidateCode(code, properties.getValidateCode().getSmsValidateCode().getExpireIn());
-        //2.将验证码储存到session
-        sessionStrategy.setAttribute(new ServletWebRequest(request, response),
-                ProjectConstant.SMS_VALIDATE_CODE_IN_SESSION,
-                validateCode);
-        //3.发送验证码
-        log.debug("当前正在向手机号{}发送短信验证码{}", request.getParameter(properties.getValidateCode().getSmsValidateCode().getMobileParaName()), validateCode.getCode());
+    @GetMapping("/{codeType}")
+    public void getValidateCode(@PathVariable String codeType, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        log.debug("当前验证码的类型是{}", codeType);
+        for (ValidateCodeProcessor validateCodeProcessor : validateCodeProcessors) {
+            if(validateCodeProcessor.supportCodeType(codeType)){
+                validateCodeProcessor.createValidateCode();
+            }
+        }
 
     }
+
+//    @GetMapping(ProjectConstant.IMAGE_VALIDATE_CODE_GENERATE_URL)
+//    public void getImageValidateCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
+//        //1.创建图片验证码
+//        ImageValidateCode imageValidateCode = createImageCode();
+//        //2.将验证码储存到session
+//        sessionStrategy.setAttribute(new ServletWebRequest(request, response),
+//                ProjectConstant.IMAGE_VALIDATE_CODE_IN_SESSION,
+//                imageValidateCode);
+//        //3.响应验证码到前端
+//        ImageIO.write(imageValidateCode.getImage(),
+//                "JPEG",
+//                response.getOutputStream());
+//    }
+//
+//    @GetMapping(ProjectConstant.SMS_VALIDATE_CODE_GENERATE_URL)
+//    public void getSmsValidateCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
+//        //1.创建短信验证码
+//        String code = RandomStringUtils.randomNumeric(properties.getValidateCode().getSmsValidateCode().getLength());
+//        ValidateCode validateCode = new ValidateCode(code, properties.getValidateCode().getSmsValidateCode().getExpireIn());
+//        //2.将验证码储存到session
+//        sessionStrategy.setAttribute(new ServletWebRequest(request, response),
+//                ProjectConstant.SMS_VALIDATE_CODE_IN_SESSION,
+//                validateCode);
+//        //3.发送验证码
+//        log.debug("当前正在向手机号{}发送短信验证码{}", request.getParameter(properties.getValidateCode().getSmsValidateCode().getMobileParaName()), validateCode.getCode());
+//
+//    }
 
     //创建图形二维码
     private ImageValidateCode createImageCode() {

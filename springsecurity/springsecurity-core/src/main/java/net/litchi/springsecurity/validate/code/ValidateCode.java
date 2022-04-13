@@ -1,4 +1,4 @@
-package net.litchi.springsecurity.validate;
+package net.litchi.springsecurity.validate.code;
 
 import lombok.Data;
 
