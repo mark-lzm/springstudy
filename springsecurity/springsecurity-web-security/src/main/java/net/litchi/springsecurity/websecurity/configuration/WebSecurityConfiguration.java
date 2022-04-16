@@ -1,6 +1,7 @@
 package net.litchi.springsecurity.websecurity.configuration;
 
 import lombok.AllArgsConstructor;
+import net.litchi.springsecurity.authentication.sms.SmsAuthenticationConfig;
 import net.litchi.springsecurity.properties.ProjectConstant;
 import net.litchi.springsecurity.properties.ProjectProperties;
 import net.litchi.springsecurity.properties.WebProperties;
@@ -41,10 +42,14 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private ValidateCodeFilter validateCodeFilter;
 
+    private SmsAuthenticationConfig smsAuthenticationConfig;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
         WebProperties web = properties.getWeb();
+
+        http.apply(smsAuthenticationConfig);
 
         /**
          * 在访问用户密码登录之前，需要先访问验证码过滤器
