@@ -39,4 +39,9 @@ public class WebProperties {
      * 登录方式，默认情况下，登录成功之后，行为重定向
      */
     private LoginType loginType = LoginType.REDIRACT;
+
+    /**
+     * token失效时间  默认7天
+     */
+    private int tokenValiditySeconds=60*60*24*7;
 }

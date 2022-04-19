@@ -12,9 +12,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 /**
  * 1.认证
@@ -43,6 +45,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     private ValidateCodeFilter validateCodeFilter;
 
     private SmsAuthenticationConfig smsAuthenticationConfig;
+    private PersistentTokenRepository persistentTokenRepository;
+    private UserDetailsService userDetailsService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -68,6 +72,16 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .successHandler(authenticationSuccessHandler)
                 //登录失败处理器  登录失败，默认跳转到loginPage
                 .failureHandler(authenticationFailureHandler)
+                //返回上级目录
+                .and()
+                //配置记住我功能
+            .rememberMe()
+                //装配token当前存储策略  默认是基于JDBC实现的
+                .tokenRepository(persistentTokenRepository)
+                //配置token有效期
+                .tokenValiditySeconds(web.getTokenValiditySeconds())
+                //提供 查询到了token之后，使用name  再哪个类中登录
+                .userDetailsService(userDetailsService)
                 //返回上级目录
                 .and()
                 //表示当前对授权模块进行配置
