@@ -5,6 +5,7 @@ import net.litchi.springsecurity.mapper.UserMapper;
 import net.litchi.springsecurity.pojo.User;
 import net.litchi.springsecurity.properties.ProjectConstant;
 import net.litchi.springsecurity.service.UserService;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -41,29 +42,27 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        if (request.getRequestURI().equals(ProjectConstant.MOBILE_LOGIN_PROCESSING_URL)) {
-            Example example = new Example(User.class);
-            example.createCriteria().andEqualTo("mobile", username);
-            List<User> users = userMapper.selectByExample(example);
-            if (users.size() != 0) {
-                User user = users.get(0);
-                UserDetails userDetails = new org.springframework.security.core.userdetails.User(username, user.getPassword(),
-                        true, true, true, true,
-                                AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_ADMIN,ROLE_USER"));//权限列表设置
-                return userDetails;
-            }
+
+        //表单登录 -> id 记住我 -> token中的username(id)  手机号 -> mobile
+
+        org.springframework.security.core.userdetails.User result = null;
+        User user = null;
+
+        //判断是否用手机号查询
+        if (StringUtils.equals(ProjectConstant.MOBILE_LOGIN_PROCESSING_URL, request.getRequestURI())) {
+            User queryUser = new User();
+            queryUser.setMobile(username);
+            user = userMapper.selectOne(queryUser);
         } else {
-            Example example = new Example(User.class);
-            example.createCriteria().andEqualTo("id", username);
-            List<User> users = userMapper.selectByExample(example);
-            if (users.size() != 0) {
-                User user = users.get(0);
-                UserDetails userDetails = new org.springframework.security.core.userdetails.User(username, user.getPassword(),
-                        true, true, true, true,
-                                AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_ADMIN,ROLE_USER"));//权限列表设置
-                return userDetails;
-            }
+            //其他均为直接传username(id)  -- 考虑remember-me情况
+            user = userMapper.selectByPrimaryKey(username);
         }
-        throw new UsernameNotFoundException("username not found");
+
+        //传入id，否则remember-me调用的时候报bug
+        result = new org.springframework.security.core.userdetails.User(user.getId(), user.getPassword(),
+                true, true, true, true,
+                //权限列表设置
+                AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_ADMIN,ROLE_USER"));
+        return result;
     }
 }

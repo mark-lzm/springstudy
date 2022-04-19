@@ -32,6 +32,6 @@ public interface ValidateCodeProcessor {
     /**
      * 判断当前验证码类型是否需要验证
      */
-    boolean IsValidate(String type);
+    boolean isValidate(String type);
 
 }

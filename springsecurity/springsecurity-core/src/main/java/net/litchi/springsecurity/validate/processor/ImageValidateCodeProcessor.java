@@ -1,6 +1,5 @@
 package net.litchi.springsecurity.validate.processor;
 
-import net.litchi.springsecurity.properties.ProjectConstant;
 import net.litchi.springsecurity.validate.code.ImageValidateCode;
 import net.litchi.springsecurity.validate.generate.ImageValidateCodeGenerator;
 import org.apache.commons.lang.StringUtils;
@@ -39,7 +38,7 @@ public class ImageValidateCodeProcessor extends AbstractValidateCodeProcessor<Im
     }
 
     @Override
-    public boolean IsValidate(String type) {
+    public boolean isValidate(String type) {
         return StringUtils.equals(FORM_LOGIN_TYPE, type);
     }
 

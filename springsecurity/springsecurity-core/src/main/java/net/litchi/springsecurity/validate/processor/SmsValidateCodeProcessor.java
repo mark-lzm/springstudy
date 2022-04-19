@@ -1,6 +1,5 @@
 package net.litchi.springsecurity.validate.processor;
 
-import net.litchi.springsecurity.properties.ProjectConstant;
 import net.litchi.springsecurity.validate.code.ValidateCode;
 import net.litchi.springsecurity.validate.exception.ValidateCodeException;
 import net.litchi.springsecurity.validate.generate.SmsValidateCodeGenerator;
@@ -53,7 +52,7 @@ public class SmsValidateCodeProcessor extends AbstractValidateCodeProcessor<Vali
     }
 
     @Override
-    public boolean IsValidate(String type) {
+    public boolean isValidate(String type) {
         return StringUtils.equals(MOBILE_LOGIN_TYPE, type);
     }
 

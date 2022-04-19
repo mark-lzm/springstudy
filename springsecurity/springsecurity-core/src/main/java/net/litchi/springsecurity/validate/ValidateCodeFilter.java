@@ -82,7 +82,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
             try {
                 for (ValidateCodeProcessor validateCodeProcessor : validateCodeProcessors) {
                     //循环查找适合的处理器，是否需要验证
-                    if (validateCodeProcessor.IsValidate(StringUtils.substringAfter(request.getRequestURI(),
+                    if (validateCodeProcessor.isValidate(StringUtils.substringAfter(request.getRequestURI(),
                             ProjectConstant.AUTHENTICATION_URI + "/"))) {
                         validateCodeProcessor.validate(new ServletWebRequest(request, response));
                     }
